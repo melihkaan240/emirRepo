@@ -1,0 +1,96 @@
+.Container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2B2B2B;
+    height: 100vh;
+    min-width: 16vw;
+    
+}
+.title{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.p1{
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+.p2{
+    color: #FFF;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.optionsContainer{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    padding-top: 60px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.options{
+display: flex;
+flex-direction: column;
+margin-left: 20px;
+
+width: 70%;
+
+}
+.options:hover{
+    border-radius: 10px;
+    background-color: #00D1FF;
+    transition: background-color 0.8s ease, opacity 0.3s ease; /* Animasyonlu geçiş ekledik */
+}
+.childSectionHead{
+    display: flex;
+flex-direction: row;
+gap: 20px;
+margin-left: 20px;
+align-items: center;
+justify-content: start;
+}
+
+
+.options:hover .childSections {
+    display: block; /* Hover olduğunda görünür yap */
+    visibility: visible;
+    width: 80%;
+    padding-left: 20px;
+}
+
+.options .childSections {
+    display: none; /* Hover olmadığında gizli yap */
+    visibility: hidden;
+    align-items: center;
+    justify-content: center;
+        
+}
+.childSectionsText {
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Animasyonlu geçiş ekledik */
+}
+
+.childSectionsText:hover {
+    backdrop-filter: blur(5px); /* Hover olduğunda blurlu arka plan */
+    background-color: transparent;
+    opacity: 0.5;
+}
+.textOptions{
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
