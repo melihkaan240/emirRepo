@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from '../components/navbar/Navbar'
 import "./discovery.css"
+import { Link } from "react-router-dom";
+
 export const Discovery = () => {
   return (
     <div className="App">
@@ -16,7 +18,9 @@ export const Discovery = () => {
     <p className='leftText'>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
+    <Link to="/stepone"  >
     <button className='homeBtn'>Run</button>
+</Link>
     
     </div>
     </div>
