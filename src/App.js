@@ -3,6 +3,7 @@ import './App.css';
 import Home from './pages/Home';
 import { Discovery } from './pages/Discovery';
 import { Stepone } from "./pages/Stepone";
+import { Steptwo } from "./pages/Steptwo";
 function App() {
   return (
     <div className="App">
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<Home />}/>
       <Route path="/discovery" element={<Discovery />} />
       <Route path="/stepone" element={<Stepone />} />
+      <Route path="/steptwo" element={<Steptwo />} />
     </Routes>
   </BrowserRouter>
     </div>
