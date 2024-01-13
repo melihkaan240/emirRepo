@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
-import { Link } from "react-router-dom";
-import { Stepthree } from "./Stepthree";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import {  useSelector } from "react-redux";
 export const Steptwo = () => {
-  // State tanımları
   const [inputValue, setInputValue] = useState("");
-  const [subfinderResults, setSubfinderResults] = useState(""); // Subfinder sonuçlarını saklamak için yeni state
+ 
 
-  // Input değeri değiştiğinde state'i güncelle
+  const location = useLocation();
+  const { parameters } = location.state || { parameters: [] }; // Eğer parametreler gelmezse varsayılan olarak boş bir dizi
+  const myParams  = useSelector((state) => state.api.params);
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  // Butona tıklandığında backend'e istek yap
   const handleButtonClick = async () => {
     try {
       const response = await fetch("http://localhost:3001/runSubfinder", {
@@ -21,16 +20,14 @@ export const Steptwo = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ domain: inputValue }),
+        body: JSON.stringify({ domain: inputValue,parameters:myParams }),
       });
       const data = await response.text();
-      setSubfinderResults(data); // Elde edilen sonucu state'e kaydet
     } catch (error) {
       console.error("Error:", error);
-      setSubfinderResults("Bir hata oluştu!"); // Hata durumunda state'i güncelle
     }
   };
-
+  
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <Navbar />
@@ -153,28 +150,11 @@ export const Steptwo = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </div>
-          <Link
-            to="/stepthree"
-            className="textOptions"
-            style={{ textDecoration: "none", height: "auto", width: "70%" }}
-          >
-            <button
-              className="stepBtn"
-              style={{ display: "flex", alignItems: "start" }}
-              onClick={handleButtonClick}
-            >
-              Continue
-            </button>
-          </Link>
+          <input type="text" value={inputValue} onChange={handleInputChange} />
+          <button onClick={handleButtonClick}>Continue</button>
 
-          {/* Subfinder Sonuçlarını Göster */}
 
-          {subfinderResults && (
-            <div>
-              <h3>Subfinder Sonuçları:</h3>
-              <pre>{subfinderResults}</pre>
-            </div>
-          )}
+           <button onClick={()=>console.log("test value:",inputValue)}>test button</button>
         </div>
       </div>
     </div>

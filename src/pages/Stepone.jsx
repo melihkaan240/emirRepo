@@ -1,8 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
+import { useNavigate, Link } from "react-router-dom";
 import "./stepone.css";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setParams } from "../Redux/api/apiSlice";
+
 export const Stepone = () => {
+  const dispatch = useDispatch();
+  const [first, setFirst] = useState([]);
+  const myParams  = useSelector((state) => state.api.params); 
+  
+  const handleSetRedux=()=>{
+  
+    // console.log("first:",first);
+    // dispatch(setMyData({ ...params, params: selectedOption }));
+    dispatch(setParams({ ...myParams, params: first }));
+  }
+  const arr = [
+    { title: "-d" },
+    { title: "-dL" },
+    { title: "-s" },
+    { title: "-recursive" },
+    { title: "-all" },
+    { title: "-es" },
+    { title: "-m" },
+    { title: "-f" },
+    { title: "-rl" },
+    { title: "-rls" },
+    { title: "-t" },
+    { title: "-up" },
+    { title: "-duc" },
+    { title: "-o" },
+    { title: "-oJ" },
+    { title: "-oD" },
+    { title: "-cs" },
+    { title: "-ol" },
+    { title: "-config" },
+    { title: "-pc" },
+    { title: "-r" },
+    { title: "-rL" },
+    { title: "-nW" },
+    { title: "-proxy" },
+    { title: "-ei" },
+    { title: "-slient" },
+    { title: "-version" },
+    { title: "-v" },
+    { title: "-nc" },
+    { title: "-is" },
+    // Diğer parametreleriniz
+  ];
+    
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <Navbar />
@@ -81,17 +128,26 @@ export const Stepone = () => {
             aliquip ex ea commodo consequat.
           </div>
           <Link
-            to="/steptwo"
+            to={{
+            pathname:"/steptwo",
+          
+            }}
+            
             className="textOptions"
             style={{ textDecoration: "none", height: "auto", width: "70%" }}
           >
             <button
               className="stepBtn"
               style={{ display: "flex", alignItems: "start" }}
+             onClick={() =>handleSetRedux()}
             >
               Continue
             </button>
+          
           </Link>
+          <button onClick={()=>console.log("first array:", first)}>first array</button>
+          <button onClick={()=>handleSetRedux}>handle set redux</button>
+          <button onClick={()=>console.log("params:",myParams)}>handle getparams</button>
         </div>
         <div
           style={{
@@ -103,54 +159,26 @@ export const Stepone = () => {
             width: "50%",
           }}
         >
-          <Box />
-        </div>
-      </div>
-    </div>
-  );
-};
+      {/* <Box onSelectOption={handleSelectOption}/> */}
 
-const Box = () => {
-  const arr = [
-    { title: "-d" },
-    { title: "-dL" },
-    { title: "-s" },
-    { title: "-recursive" },
-    { title: "-all" },
-    { title: "-es" },
-    { title: "-m" },
-    { title: "-f" },
-    { title: "-rl" },
-    { title: "-rls" },
-    { title: "-t" },
-    { title: "-up" },
-    { title: "-duc" },
-    { title: "-o" },
-    { title: "-oJ" },
-    { title: "-oD" },
-    { title: "-cs" },
-    { title: "-ol" },
-    { title: "-config" },
-    { title: "-pc" },
-    { title: "-r" },
-    { title: "-rL" },
-    { title: "-nW" },
-    { title: "-proxy" },
-    { title: "-ei" },
-    { title: "-slient" },
-    { title: "-version" },
-    { title: "-v" },
-    { title: "-nc" },
-    { title: "-is" },
-  ];
-
-  return (
-    <div className="stepOneOptionsContainer">
+      <div className="stepOneOptionsContainer">
       {arr.map((i, index) => (
-        <div key={index} className="stepOneOptions">
-          <p>{i.title}</p>
-        </div>
+       <div
+       key={index}
+       className="stepOneOptions"
+       onClick={() => {
+        setFirst([...first, i.title]);
+      }}
+     >
+       <p>{i.title}</p>
+     </div>
       ))}
     </div>
+        </div>
+      </div>
+
+    </div>
   );
 };
+
+
