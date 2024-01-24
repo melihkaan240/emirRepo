@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
-import { useNavigate, useLocation } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setSubDomain } from "../Redux/subfinder/subfinderSlice";
 export const Steptwo = () => {
   const [inputValue, setInputValue] = useState("");
  
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const { parameters } = location.state || { parameters: [] }; // Eğer parametreler gelmezse varsayılan olarak boş bir dizi
@@ -12,22 +14,26 @@ export const Steptwo = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-
+  const [outputData, setOutputData] = useState([]);
   const handleButtonClick = async () => {
     try {
-      const response = await fetch("http://localhost:3001/runSubfinder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ domain: inputValue,parameters:myParams }),
-      });
-      const data = await response.text();
+        const response = await fetch("http://localhost:3001/runSubfinder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ domain: inputValue, parameters: myParams }),
+        });
+
+        const data = await response.json(); // JSON olarak al
+
+            setOutputData(data.output); // Çıktıyı işle
     } catch (error) {
-      console.error("Error:", error);
+        console.error("Error:", error);
     }
-  };
-  
+    // redux'a set et
+    dispatch(setSubDomain(outputData));
+};
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <Navbar />
@@ -150,13 +156,30 @@ export const Steptwo = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </div>
-          <input type="text" value={inputValue} onChange={handleInputChange} />
-          <button onClick={handleButtonClick}>Continue</button>
+         
+          <div style={{display:"flex", width:"70%"}}>
 
+          <Link
+            to={{
+            pathname:"/stepthree",
+          
+            }}
+            
+            className="textOptions"
+            style={{ textDecoration: "none", height: "auto", width: "70%" }}
+          >
+             <button 
+          className="stepBtn"
+          style={{ display: "flex", alignItems: "start" }}
+          onClick={handleButtonClick}>Continue</button>
+          {/* <button onClick={()=>console.log("Melih test:", outputData)}>melih </button> */}
 
-           <button onClick={()=>console.log("test value:",inputValue)}>test button</button>
+          </Link>
+         
+          </div>
+           <pre>{outputData.map((i)=><li>{i}</li>)}</pre>
         </div>
-      </div>
+      </div>  
     </div>
   );
 };
